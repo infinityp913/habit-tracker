@@ -1,0 +1,68 @@
+name: HabitTracker
+
+options:
+  bundleIdPrefix: com.ananth
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+
+targets:
+
+  HabitTracker:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: HabitTracker
+    dependencies:
+      - target: HabitTrackerWidget
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ananth.habittracker
+        DEVELOPMENT_TEAM: ""   # ← fill in your Apple ID team (Xcode → Signing & Capabilities)
+        CODE_SIGN_ENTITLEMENTS: HabitTracker/HabitTracker.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_CFBundleDisplayName: HabitTracker
+        INFOPLIST_KEY_NSUserNotificationsUsageDescription: "Send daily habit reminders."
+        TARGETED_DEVICE_FAMILY: "1"
+
+  HabitTrackerWidget:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: HabitTrackerWidget
+      - path: HabitTracker/HabitStore.swift   # shared with main target
+    info:
+      path: HabitTrackerWidget/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ananth.habittracker.widget
+        DEVELOPMENT_TEAM: ""   # ← same team as main target
+        CODE_SIGN_ENTITLEMENTS: HabitTrackerWidget/HabitTrackerWidget.entitlements
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "1"
+
+  HabitTrackerTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: HabitTrackerTests
+    dependencies:
+      - target: HabitTracker
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ananth.habittracker.tests
+        GENERATE_INFOPLIST_FILE: YES
