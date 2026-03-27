@@ -33,9 +33,21 @@ struct SmallWidgetView: View {
                     .font(.system(size: 52, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
 
-                Text(entry.streak == 0 ? "start today" : "days")
-                    .font(.system(size: 10))
-                    .foregroundColor(.white.opacity(0.4))
+                if entry.streak > 0 || entry.todayCheckIn != nil {
+                    Text(entry.streak == 0 ? "start today" : "days")
+                        .font(.system(size: 10))
+                        .foregroundColor(.white.opacity(0.4))
+                }
+
+                if entry.todayCheckIn == nil {
+                    Image(systemName: "circle")
+                        .font(.system(size: 9))
+                        .foregroundColor(.white.opacity(0.45))
+                } else if entry.todayCheckIn == true {
+                    Image(systemName: "circle.fill")
+                        .font(.system(size: 9))
+                        .foregroundColor(.white.opacity(0.45))
+                }
             } else {
                 Text("Open app\nto set up")
                     .font(.caption2)
@@ -65,9 +77,21 @@ struct MediumWidgetView: View {
                     .font(.system(size: 52, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
 
-                Text(entry.streak == 0 ? "start today" : "days")
-                    .font(.system(size: 11))
-                    .foregroundColor(.white.opacity(0.4))
+                if entry.streak > 0 || entry.todayCheckIn != nil {
+                    Text(entry.streak == 0 ? "start today" : "days")
+                        .font(.system(size: 11))
+                        .foregroundColor(.white.opacity(0.4))
+                }
+
+                if entry.todayCheckIn == nil {
+                    Label("today?", systemImage: "circle")
+                        .font(.system(size: 10))
+                        .foregroundColor(.white.opacity(0.45))
+                } else if entry.todayCheckIn == true {
+                    Label("done", systemImage: "circle.fill")
+                        .font(.system(size: 10))
+                        .foregroundColor(.white.opacity(0.45))
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
