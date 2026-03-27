@@ -40,7 +40,20 @@ struct ContentView: View {
                     .font(.caption)
                     .tracking(4)
                     .foregroundColor(.white.opacity(0.35))
-                    .padding(.bottom, 44)
+
+                if store.isTodayPending {
+                    Label("today?", systemImage: "circle")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                } else if store.todayCheckIn() == true {
+                    Label("done", systemImage: "circle.fill")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                }
+
+                Spacer().frame(height: 44)
 
                 // Check-in buttons
                 HStack(spacing: 16) {

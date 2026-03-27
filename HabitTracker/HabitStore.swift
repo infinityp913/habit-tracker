@@ -52,10 +52,20 @@ class HabitStore: ObservableObject {
 
     func logCheckIn(value: Bool) {
         let key = Self.dateKey(for: Date())
-        checkIns[key] = value
+        checkIns = Self.toggledCheckIns(checkIns, key: key, value: value)
         defaults.set(checkIns, forKey: "checkIns")
         defaults.synchronize()
         reloadWidget()
+    }
+
+    static func toggledCheckIns(_ checkIns: [String: Bool], key: String, value: Bool) -> [String: Bool] {
+        var updated = checkIns
+        if updated[key] == value {
+            updated.removeValue(forKey: key)    // same button tapped again → pending
+        } else {
+            updated[key] = value
+        }
+        return updated
     }
 
     func todayCheckIn() -> Bool? {
@@ -70,8 +80,20 @@ class HabitStore: ObservableObject {
 
     static func calculateStreak(checkIns: [String: Bool], startDate: Date, today: Date = Date()) -> Int {
         let calendar = Calendar.current
-        var date = calendar.startOfDay(for: today)
         let start = calendar.startOfDay(for: startDate)
+        let todayStart = calendar.startOfDay(for: today)
+        let todayKey = dateKey(for: todayStart)
+
+        var date: Date
+        if let todayResult = checkIns[todayKey] {
+            if !todayResult { return 0 }    // explicitly missed today → 0
+            date = todayStart               // confirmed today → count from today
+        } else {
+            // Not yet checked — count only through yesterday
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: todayStart)
+            else { return 0 }
+            date = yesterday
+        }
 
         guard date >= start else { return 0 }
 
@@ -79,15 +101,26 @@ class HabitStore: ObservableObject {
         while date >= start {
             let key = dateKey(for: date)
             if let result = checkIns[key] {
-                if !result { break }   // explicit miss — stop
+                if !result { break }
                 count += 1
             } else {
-                count += 1             // absent = implicit ✓
+                count += 1                  // absent past day = implicit ✓
             }
             guard let prev = calendar.date(byAdding: .day, value: -1, to: date) else { break }
             date = prev
         }
         return count
+    }
+
+    static func isTodayPending(checkIns: [String: Bool], startDate: Date, today: Date = Date()) -> Bool {
+        let calendar = Calendar.current
+        let todayStart = calendar.startOfDay(for: today)
+        let start = calendar.startOfDay(for: startDate)
+        return todayStart >= start && checkIns[Self.dateKey(for: todayStart)] == nil
+    }
+
+    var isTodayPending: Bool {
+        Self.isTodayPending(checkIns: checkIns, startDate: startDate)
     }
 
     static func dateKey(for date: Date) -> String {
