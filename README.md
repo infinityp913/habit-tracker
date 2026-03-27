@@ -2,6 +2,12 @@
 
 A minimal iPhone habit tracker with a home screen widget. Track one habit. See your streak. That's it.
 
+## Screenshots
+
+| Small widget | Medium widget | Main view | Settings |
+|---|---|---|---|
+| ![Small widget](screenshots/widget-small.png) | ![Medium widget](screenshots/widget-medium.png) | ![Main view](screenshots/app-main.png) | ![Settings](screenshots/app-settings.png) |
+
 ## Features
 
 - Home screen widget (small: streak count, medium: interactive ✓/✗ buttons)
