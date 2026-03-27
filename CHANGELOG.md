@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0.0] - 2026-03-27
+
+### Added
+- Lock screen widget support: three accessory families (circular, rectangular, inline) showing the current streak. Read-only; uses `AccessoryWidgetBackground` and `widgetAccentable` for native lock screen styling.
+
 ## [0.1.0.0] - 2026-03-27
 
 ### Added

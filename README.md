@@ -4,9 +4,9 @@ A minimal iPhone habit tracker with a home screen widget. Track one habit. See y
 
 ## Screenshots
 
-| Small widget | Medium widget | Main view | Settings |
-|---|---|---|---|
-| ![Small widget](screenshots/widget-small.png) | ![Medium widget](screenshots/widget-medium.png) | ![Main view](screenshots/app-main.png) | ![Settings](screenshots/app-settings.png) |
+| Small widget | Medium widget | Main view | Settings | Lock screen widget |
+|---|---|---|---|---|
+| ![Small widget](screenshots/widget-small.png) | ![Medium widget](screenshots/widget-medium.png) | ![Main view](screenshots/app-main.png) | ![Settings](screenshots/app-settings.png) | ![Lock screen widget](screenshots/lockscreen-widget.jpeg) |
 
 ## Features
 
