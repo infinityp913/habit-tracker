@@ -9,6 +9,12 @@ struct WidgetView: View {
         switch widgetFamily {
         case .systemSmall:
             SmallWidgetView(entry: entry)
+        case .accessoryCircular:
+            AccessoryCircularView(entry: entry)
+        case .accessoryRectangular:
+            AccessoryRectangularView(entry: entry)
+        case .accessoryInline:
+            AccessoryInlineView(entry: entry)
         default:
             MediumWidgetView(entry: entry)
         }
@@ -56,6 +62,59 @@ struct SmallWidgetView: View {
             }
         }
         .containerBackground(.black, for: .widget)
+    }
+}
+
+// MARK: - Accessory: Circular (lock screen)
+
+struct AccessoryCircularView: View {
+    let entry: HabitEntry
+
+    var body: some View {
+        ZStack {
+            AccessoryWidgetBackground()
+            VStack(spacing: 0) {
+                Text("\(entry.streak)")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .widgetAccentable()
+                Text("days")
+                    .font(.caption2)
+            }
+        }
+        .containerBackground(for: .widget) {}
+    }
+}
+
+// MARK: - Accessory: Rectangular (lock screen)
+
+struct AccessoryRectangularView: View {
+    let entry: HabitEntry
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(entry.habitName)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+            HStack(spacing: 4) {
+                Image(systemName: "flame.fill")
+                    .widgetAccentable()
+                Text("\(entry.streak) day streak")
+                    .font(.headline)
+            }
+        }
+        .containerBackground(for: .widget) {}
+    }
+}
+
+// MARK: - Accessory: Inline (lock screen)
+
+struct AccessoryInlineView: View {
+    let entry: HabitEntry
+
+    var body: some View {
+        Label("\(entry.streak) day streak", systemImage: "flame.fill")
+            .containerBackground(for: .widget) {}
     }
 }
 

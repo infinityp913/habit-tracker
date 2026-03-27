@@ -83,6 +83,18 @@ When `notificationTime` changes, always call `removePendingNotificationRequests(
 - **No grace period** — missed days reset streak to 0 immediately (v1 philosophy)
 - **No data backup** — App Group UserDefaults only; device wipe loses all history (accepted for personal use)
 
+## Versioning & Changelog
+
+After every change, update `CHANGELOG.md` and bump `VERSION` using semantic versioning:
+
+| Change type | Version bump | Examples |
+|---|---|---|
+| New user-visible feature | **minor** (1.x.0) | new widget family, new setting, new screen |
+| Bug fix or small improvement | **patch** (1.0.x) | layout fix, crash fix, copy tweak |
+| Breaking architectural change | **major** (x.0.0) | data model migration, target restructure |
+
+Add an entry under `## [Unreleased]` in `CHANGELOG.md` following Keep a Changelog format. Move it to a versioned heading when shipping.
+
 ## Design Doc
 
 The full spec and architectural decisions live at:

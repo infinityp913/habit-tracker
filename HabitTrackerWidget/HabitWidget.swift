@@ -62,6 +62,6 @@ struct HabitTrackerWidget: Widget {
         }
         .configurationDisplayName("Habit Tracker")
         .description("Track your daily habit streak.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }
